@@ -16,3 +16,8 @@ val Olivine = Color(0xffadc178)
 val DarkOliveGreen = Color(0xff7B9B44)
 val Chamoisee = Color(0xffa98467)
 val Umber = Color(0xff6c584c)
+
+
+val SurfaceColor = Color(0xFFFEFAF1)
+val PrimaryColor  = Color(0xFF559E55)
+val SecondaryColor = Color(0xFF335E33)

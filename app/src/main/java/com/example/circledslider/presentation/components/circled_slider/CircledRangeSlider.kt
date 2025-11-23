@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -50,6 +51,9 @@ import androidx.compose.ui.unit.toOffset
 import com.example.circledslider.ui.theme.DarkOliveGreen
 import com.example.circledslider.ui.theme.Olivine
 import com.example.circledslider.ui.theme.Parchment
+import com.example.circledslider.ui.theme.PrimaryColor
+import com.example.circledslider.ui.theme.SecondaryColor
+import com.example.circledslider.ui.theme.SurfaceColor
 import com.example.circledslider.ui.theme.Umber
 import kotlin.math.abs
 import kotlin.math.atan2
@@ -81,19 +85,23 @@ fun CircledRangeSlider(
     // Component diameter in px
     var diameter by remember { mutableFloatStateOf(0f) }
 
-
     var startValue by remember { mutableFloatStateOf(startAngle) }
     var finishValue by remember { mutableFloatStateOf(finishAngle) }
 
     var isHeightBigger by remember { mutableStateOf(false) }
 
-    val mx = with(density) { (max(activeTrackThickness, inactiveTrackThickness)/2).toDp() }
-    val padding = PaddingValues(mx)
-
     val thumbSize = with(density) {(2 * thumbRadius).toDp()}
     
-    var thumbCol by remember { mutableStateOf(Color.Transparent) }
-    thumbCol = color.thumbColor()
+    var thumbColor by remember { mutableStateOf(Color.Transparent) }
+    var activeTrackColor by remember { mutableStateOf(Color.Transparent) }
+    var inactiveTrackColor by remember { mutableStateOf(Color.Transparent) }
+
+    thumbColor = color.thumbColor(enabled)
+    activeTrackColor = color.activeTrackColor(enabled)
+    inactiveTrackColor = color.inactiveTrackColor(enabled)
+
+    val mx = with(density) { (max(activeTrackThickness, inactiveTrackThickness)/2).toDp() }
+    val padding = PaddingValues(mx)
 
 
     Box(
@@ -116,7 +124,7 @@ fun CircledRangeSlider(
         }
 
         InactiveTrack(
-            color = color.inactiveTrackColor(),
+            color = inactiveTrackColor,
             thickness = inactiveTrackThickness,
             isHeightBigger = isHeightBigger
         )
@@ -124,7 +132,7 @@ fun CircledRangeSlider(
         ActiveTrack(
             startAngle = startValue,
             finishAngle = finishValue,
-            color = color.activeTrackColor(),
+            color = activeTrackColor,
             thickness = activeTrackThickness,
             isHeightBigger = isHeightBigger
         )
@@ -152,14 +160,14 @@ fun CircledRangeSlider(
                                 startValue = newAngle
                             }
 
-                            onFinishAngleChange(startValue)
+                            onStartAngleChange(startValue)
                         }
                     )
                 }
 
         ) {
             drawCircle(
-                color = thumbCol,
+                color = thumbColor,
                 radius = thumbRadius,
                 center = center,
             )
@@ -195,7 +203,7 @@ fun CircledRangeSlider(
 
         ) {
             drawCircle(
-                color = thumbCol,
+                color = thumbColor,
                 radius = thumbRadius,
                 center = center,
             )
@@ -238,24 +246,35 @@ fun CircledRangeSliderPreview(){
     val inactiveTrackThickness = 100f
 
     var start by remember { mutableFloatStateOf(30f) }
+    var finish by remember { mutableFloatStateOf(120f) }
 
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Parchment)
+            .background(color = SurfaceColor)
     ) {
+        Row(
+            horizontalArrangement = Arrangement.SpaceAround,
+            modifier = Modifier
+                .fillMaxWidth()
+        ){
+            Text("${start}")
+            Text("${finish}")
+        }
+
         CircledRangeSlider(
             startAngle = start,
-            finishAngle = 100f,
-            onStartAngleChange = { start = it},
-            onFinishAngleChange = {},
+            finishAngle = finish,
+            onStartAngleChange = { start = it },
+            onFinishAngleChange = { finish = it },
             color = CircledRangeSliderDefaults.circledSliderColors(
-                inactiveTrackColor = DarkOliveGreen,
-                activeTrackColor = Umber,
-                thumbColor = Parchment
+                inactiveTrackColor = SecondaryColor,
+                activeTrackColor = PrimaryColor,
+                thumbColor = SurfaceColor
             ),
+//            enabled = false,
             paddingValues = PaddingValues(),
             thumbRadius = thumbRadius,
             activeTrackThickness = activeTrackThickness,
@@ -342,52 +361,52 @@ object CircledRangeSliderDefaults {
     )
 
 
-    @Composable
-    fun circledSliderThickness(
-        thumbRadius: Float,
-        activeTrackThickness: Float,
-        inactiveTrackThickness: Float,
-        disabledThumbRadius: Float,
-        disabledActiveTrackThickness: Float,
-        disabledInactiveTrackThickness: Float,
-    ): CircledSliderThickness = CircledSliderThickness(
-        thumbRadius = thumbRadius,
-        activeTrackThickness = activeTrackThickness,
-        inactiveTrackThickness = inactiveTrackThickness,
-        disabledThumbRadius = disabledThumbRadius,
-        disabledActiveTrackThickness = disabledActiveTrackThickness,
-        disabledInactiveTrackThickness = disabledInactiveTrackThickness,
-    )
+//    @Composable
+//    fun circledSliderThickness(
+//        thumbRadius: Float,
+//        activeTrackThickness: Float,
+//        inactiveTrackThickness: Float,
+//        disabledThumbRadius: Float,
+//        disabledActiveTrackThickness: Float,
+//        disabledInactiveTrackThickness: Float,
+//    ): CircledSliderThickness = CircledSliderThickness(
+//        thumbRadius = thumbRadius,
+//        activeTrackThickness = activeTrackThickness,
+//        inactiveTrackThickness = inactiveTrackThickness,
+//        disabledThumbRadius = disabledThumbRadius,
+//        disabledActiveTrackThickness = disabledActiveTrackThickness,
+//        disabledInactiveTrackThickness = disabledInactiveTrackThickness,
+//    )
 }
 
 
-@Immutable
-class CircledSliderThickness internal constructor(
-    private val thumbRadius: Float,
-    private val activeTrackThickness: Float,
-    private val inactiveTrackThickness: Float,
-    private val disabledThumbRadius: Float,
-    private val disabledActiveTrackThickness: Float,
-    private val disabledInactiveTrackThickness: Float,
-) {
-    @Composable
-    fun thumbRadius(): Float = thumbRadius
-
-    @Composable
-    fun activeTrackThickness(): Float = activeTrackThickness
-
-    @Composable
-    fun inactiveTrackThickness(): Float = inactiveTrackThickness
-
-    @Composable
-    fun disabledThumbRadius(): Float = disabledThumbRadius
-
-    @Composable
-    fun disabledActiveTrackThickness(): Float = disabledActiveTrackThickness
-
-    @Composable
-    fun disabledInactiveTrackThickness(): Float = disabledInactiveTrackThickness
-}
+//@Immutable
+//class CircledSliderThickness internal constructor(
+//    private val thumbRadius: Float,
+//    private val activeTrackThickness: Float,
+//    private val inactiveTrackThickness: Float,
+//    private val disabledThumbRadius: Float,
+//    private val disabledActiveTrackThickness: Float,
+//    private val disabledInactiveTrackThickness: Float,
+//) {
+//    @Composable
+//    fun thumbRadius(): Float = thumbRadius
+//
+//    @Composable
+//    fun activeTrackThickness(): Float = activeTrackThickness
+//
+//    @Composable
+//    fun inactiveTrackThickness(): Float = inactiveTrackThickness
+//
+//    @Composable
+//    fun disabledThumbRadius(): Float = disabledThumbRadius
+//
+//    @Composable
+//    fun disabledActiveTrackThickness(): Float = disabledActiveTrackThickness
+//
+//    @Composable
+//    fun disabledInactiveTrackThickness(): Float = disabledInactiveTrackThickness
+//}
 
 
 @Immutable
@@ -400,18 +419,18 @@ class CircledSliderColors internal constructor(
     private val disabledInactiveTrackColor: Color,
 ) {
     @Composable
-    fun thumbColor(): Color {
-        return thumbColor
+    fun thumbColor(enabled: Boolean): Color {
+        return if (enabled) thumbColor else disabledThumbColor
     }
 
     @Composable
-    fun activeTrackColor(): Color {
-        return activeTrackColor
+    fun activeTrackColor(enabled: Boolean): Color {
+        return if (enabled) activeTrackColor else inactiveTrackColor
     }
 
     @Composable
-    fun inactiveTrackColor(): Color {
-        return inactiveTrackColor
+    fun inactiveTrackColor(enabled: Boolean): Color {
+        return if (enabled) inactiveTrackColor else disabledInactiveTrackColor
     }
 
     @Composable
