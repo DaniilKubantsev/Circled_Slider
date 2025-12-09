@@ -52,7 +52,7 @@ class CircledSliderColors internal constructor(
 )
 ```
 ## Arguments
-`startAngle` - defines the value and position of the start thumb in degrees;\
+`startAngle` - defines the value and position of the start thumb in degrees from `minDegree` to `maxDegree`;\
 `finishAngle` - defines the value and position of the finish thumb in degrees;
 `onStartAngleChange` - start value change callback;\
 `onFinishAngleChange` - finish value change callback;\
