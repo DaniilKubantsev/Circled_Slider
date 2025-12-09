@@ -5,7 +5,17 @@
 </div>
 
 ## Description
-Composable with `RangedSlider` functionality but in cercled form. The size of the range is determined as the segment on the circle(called `inactiveTrack`), defined by two thumbs. The segment is called the `activeTrack`. 
+Composable with `RangedSlider` functionality but in cercled form. The size of the range is determined as the segment on the circle(called `inactiveTrack`), defined by two thumbs. The segment is called the `activeTrack`. Track thickness and turning radius are fully adjustable as showed below:
+
+
+<div align="center">
+  <img height="200" width=auto alt="image" src="https://github.com/user-attachments/assets/a92c9a6e-450c-4f6b-9d92-46a3ce0baad5" />
+  <br>
+  <p>thumbRadius = 70, activeTrackThickness = 120, inactiveTrackThickness = 100</p>
+</div>
+
+
+
 
 ## Signature
 ```kotlin
