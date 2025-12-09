@@ -11,9 +11,14 @@ Composable with `RangedSlider` functionality but in cercled form. The size of th
 <div align="center">
   <img height="200" width=auto alt="image" src="https://github.com/user-attachments/assets/a92c9a6e-450c-4f6b-9d92-46a3ce0baad5" />
   <br>
-  <p>thumbRadius = 70, activeTrackThickness = 120, inactiveTrackThickness = 100</p>
+  <p>thumbRadius = 70, activeTrackThickness = 120, inactiveTrackThickness = 100.</p>
 </div>
 
+Component takes two arguments - `startAngle` and `finishAngle` in degrees. Degree values further can be transformed the way you need. As an example, very this component used for time adjustement in work week schedule in Maestri android app.
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/4e0f5168-fd81-44cb-a4d1-eee2d2de1cda" width="200">
+</div>
 
 
 
