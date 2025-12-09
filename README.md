@@ -1,15 +1,11 @@
 # `CircledRangeSlider` for Jetpack Compose
 
-
-
-## Description
-Composable with `RangedSlider` functionality but in cercled form. The size of the range is determined as the segment on the circle(called `inactiveTrack`), defined by two thumbs. The segment is called the `activeTrack`. 
-
-![Screen_recording_20251209_182701 (online-video-cutter com)](https://github.com/user-attachments/assets/cd200b57-3011-4f79-8826-c5ac4146ff95)
-
 <div align="center">
   <img src="https://github.com/user-attachments/assets/3b29ae3f-f008-47d2-abf6-af0b99690a35" width="200">
 </div>
+
+## Description
+Composable with `RangedSlider` functionality but in cercled form. The size of the range is determined as the segment on the circle(called `inactiveTrack`), defined by two thumbs. The segment is called the `activeTrack`. 
 
 ## Signature
 ```kotlin
